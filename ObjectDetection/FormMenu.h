@@ -68,18 +68,21 @@ namespace ObjectDetection {
 			this->label1->Font = (gcnew System::Drawing::Font(L"Angsana New", 28.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->label1->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->label1->Location = System::Drawing::Point(195, 32);
+			this->label1->Location = System::Drawing::Point(146, 26);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(255, 67);
+			this->label1->Size = System::Drawing::Size(211, 55);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"โปรแกรมภาษามือ";
+			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(296, 129);
+			this->label2->Location = System::Drawing::Point(222, 105);
+			this->label2->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(49, 16);
+			this->label2->Size = System::Drawing::Size(50, 13);
 			this->label2->TabIndex = 1;
 			this->label2->Text = L"คำอธิบาย";
 			// 
@@ -89,9 +92,10 @@ namespace ObjectDetection {
 			this->button1->Font = (gcnew System::Drawing::Font(L"Agency FB", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button1->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->button1->Location = System::Drawing::Point(266, 244);
+			this->button1->Location = System::Drawing::Point(200, 198);
+			this->button1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(114, 48);
+			this->button1->Size = System::Drawing::Size(86, 39);
 			this->button1->TabIndex = 2;
 			this->button1->Text = L"Start";
 			this->button1->UseVisualStyleBackColor = false;
@@ -102,23 +106,23 @@ namespace ObjectDetection {
 			this->button2->Font = (gcnew System::Drawing::Font(L"Agency FB", 18, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->button2->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
-			this->button2->Location = System::Drawing::Point(266, 331);
+			this->button2->Location = System::Drawing::Point(200, 269);
+			this->button2->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(114, 57);
+			this->button2->Size = System::Drawing::Size(86, 46);
 			this->button2->TabIndex = 3;
 			this->button2->Text = L"Exit";
 			this->button2->UseVisualStyleBackColor = false;
 			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(682, 453);
+			this->ClientSize = System::Drawing::Size(512, 368);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
-			this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -129,5 +133,7 @@ namespace ObjectDetection {
 #pragma endregion
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

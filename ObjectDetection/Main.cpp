@@ -1,5 +1,5 @@
 // Main.cpp : main project file.
-#include "MyForm.h"
+#include "FromMenu.h"
 using namespace ObjectDetection;
 [STAThreadAttribute]
 int Main(array<System::String^>^ args)

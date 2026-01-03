@@ -1,0 +1,4 @@
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.AssemblyReference.cache
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm.resources
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.GenerateResource.cache
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.HomeForm.resources
