@@ -2,3 +2,8 @@ D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxpro
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm.resources
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.GenerateResource.cache
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.HomeForm.resources
+C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.AssemblyReference.cache
+C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm.resources
+C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.showout.resources
+C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.GenerateResource.cache
+C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm1.resources

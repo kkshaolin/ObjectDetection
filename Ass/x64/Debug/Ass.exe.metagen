@@ -1,5 +1,6 @@
-  Ass.HomeForm.resources - Embedded, ContainedInManifestFile, 
   Ass.MyForm.resources - Embedded, ContainedInManifestFile, 
+  Ass.MyForm1.resources - Embedded, ContainedInManifestFile, 
+  Ass.showout.resources - Embedded, ContainedInManifestFile, 
 ImageRuntimeVersion: v4.0.30319
 Assembly Ass, Version=0.0.*, Culture=Invariant Language (Invariant Country): 
 	hash=SHA1, flags=PublicKey
@@ -18,6 +19,12 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class Ass.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
-Class Ass.HomeForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+Class Ass.MyForm1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Ass.MyForm2: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(System.Drawing.Image, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Ass.showout: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
