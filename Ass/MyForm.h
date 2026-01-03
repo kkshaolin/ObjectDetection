@@ -57,9 +57,7 @@ namespace Ass {
 		System::Drawing::Point roiStartPoint;
 		System::Drawing::Point roiEndPoint;
 		System::Drawing::Bitmap^ tempBitmap;
-
-
-		   System::ComponentModel::Container^ components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
@@ -81,7 +79,6 @@ namespace Ass {
 			// 
 			this->splitContainer1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->splitContainer1->Location = System::Drawing::Point(0, 0);
-			this->splitContainer1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->splitContainer1->Name = L"splitContainer1";
 			// 
 			// splitContainer1.Panel1
@@ -93,17 +90,15 @@ namespace Ass {
 			// splitContainer1.Panel2
 			// 
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox1);
-			this->splitContainer1->Size = System::Drawing::Size(584, 321);
-			this->splitContainer1->SplitterDistance = 116;
-			this->splitContainer1->SplitterWidth = 3;
+			this->splitContainer1->Size = System::Drawing::Size(949, 443);
+			this->splitContainer1->SplitterDistance = 189;
 			this->splitContainer1->TabIndex = 0;
 			// 
 			// roiButton
 			// 
-			this->roiButton->Location = System::Drawing::Point(11, 81);
-			this->roiButton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->roiButton->Location = System::Drawing::Point(63, 258);
 			this->roiButton->Name = L"roiButton";
-			this->roiButton->Size = System::Drawing::Size(79, 29);
+			this->roiButton->Size = System::Drawing::Size(80, 154);
 			this->roiButton->TabIndex = 2;
 			this->roiButton->Text = L"Set ROI";
 			this->roiButton->UseVisualStyleBackColor = true;
@@ -112,10 +107,9 @@ namespace Ass {
 			// stopbutton
 			// 
 			this->stopbutton->Enabled = false;
-			this->stopbutton->Location = System::Drawing::Point(11, 48);
-			this->stopbutton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->stopbutton->Location = System::Drawing::Point(63, 174);
 			this->stopbutton->Name = L"stopbutton";
-			this->stopbutton->Size = System::Drawing::Size(79, 29);
+			this->stopbutton->Size = System::Drawing::Size(80, 78);
 			this->stopbutton->TabIndex = 1;
 			this->stopbutton->Text = L"Stop";
 			this->stopbutton->UseVisualStyleBackColor = true;
@@ -126,10 +120,9 @@ namespace Ass {
 			this->startbutton->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
 			this->startbutton->ForeColor = System::Drawing::SystemColors::ActiveCaption;
 			this->startbutton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"startbutton.Image")));
-			this->startbutton->Location = System::Drawing::Point(11, 11);
-			this->startbutton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->startbutton->Location = System::Drawing::Point(35, 23);
 			this->startbutton->Name = L"startbutton";
-			this->startbutton->Size = System::Drawing::Size(79, 33);
+			this->startbutton->Size = System::Drawing::Size(134, 122);
 			this->startbutton->TabIndex = 0;
 			this->startbutton->Text = L"Start";
 			this->startbutton->UseVisualStyleBackColor = true;
@@ -140,28 +133,24 @@ namespace Ass {
 			this->pictureBox1->BackColor = System::Drawing::Color::Black;
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(465, 321);
+			this->pictureBox1->Size = System::Drawing::Size(756, 443);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
-			this->pictureBox1->Click += gcnew System::EventHandler(this, &MyForm::pictureBox1_Click);
 			this->pictureBox1->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::pictureBox1_MouseDown);
 			this->pictureBox1->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::pictureBox1_MouseMove);
 			this->pictureBox1->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::pictureBox1_MouseUp);
 			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(584, 321);
+			this->ClientSize = System::Drawing::Size(949, 443);
 			this->Controls->Add(this->splitContainer1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"MyForm";
 			this->Text = L"Camera Application";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &MyForm::MyForm_FormClosing);
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->splitContainer1->Panel1->ResumeLayout(false);
 			this->splitContainer1->Panel2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->EndInit();
@@ -174,7 +163,6 @@ namespace Ass {
 
 		// --- แก้ไขจุดที่ 2: ประกาศฟังก์ชันให้เป็นสมาชิกของคลาสที่นี่ ---
 		int CountFingers(const cv::Mat& roi);
-		std::string TranslateSign(int fingerCount);
 
 		System::Void startbutton_Click(System::Object^ sender, System::EventArgs^ e);
 		System::Void stopbutton_Click(System::Object^ sender, System::EventArgs^ e);
@@ -186,11 +174,5 @@ namespace Ass {
 
 		System::Drawing::Rectangle GetImageDisplayRectangle();
 		System::Drawing::Point ControlToImagePoint(System::Drawing::Point p);
-	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-};
+	};
 }

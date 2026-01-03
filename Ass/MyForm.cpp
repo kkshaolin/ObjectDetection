@@ -1,64 +1,65 @@
-﻿#include "MyForm.h"
+#include "MyForm.h"
 #include <opencv2/opencv.hpp>
 #include <string>
 #include <vector>
 #include <map>
 #include <algorithm>
 #include <cmath>
-
 using namespace cv;
 using namespace System::Drawing;
 namespace Ass {
-
-    // ฟังก์ชันสำหรับแปลงจำนวนนิ้วเป็นความหมายภาษามือ
-        std::string MyForm::TranslateSign(int fingerCount) {
-            switch (fingerCount) {
-            case 5:
-                return "HELLO";    // ชู 5 นิ้ว = สวัสดี
-            case 2:
-                return "VICTORY";  // ชู 2 นิ้ว = สู้ๆ/สันติภาพ
-            case 1:
-                return "POINT";    // ชู 1 นิ้ว = ชี้
-            case 0:
-                return "FIST";     // กำหมัด
-            default:
-                return "WAITING...";
-            }
-        }
-     
-        int MyForm::CountFingers(const cv::Mat& roi) { // ฟังก์ชันสำหรับนับจำนวนนิ้วมือ
-
-        static std::vector<int> fingerHistory; //ประวัติการนับ
-        const int MAX_HISTORY = 17; // frame ที่ใช้คำนวณ
-
-        if (roi.empty()) return 0; //ภาพเปล่า
-
-        cv::Mat hsv, mask, maskColor; //เก็บภาพ
-        cv::cvtColor(roi, hsv, cv::COLOR_BGR2HSV); //ข้อจำกัด ต้องใช้ในที่แสงคงที่
-
-        cv::inRange(hsv, cv::Scalar(0, 30, 60), cv::Scalar(20, 150, 255), mask);
-
-        cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)); //สร้างรูปทรงวงรี
+    enum GestureType {
+        GESTURE_NONE = 0,
+        GESTURE_1 = 1,
+        GESTURE_2 = 2,
+        GESTURE_3 = 3,
+        GESTURE_4 = 4,
+        GESTURE_5 = 5,
+        GESTURE_loveu = 6,
+        GESTURE_BYE = 7 // �������⺡���
+    };
         
-        // filter
-        //cv::erode(mask, mask, kernel);
-        //cv::dilate(mask, mask, kernel);
+
+        
+
+
+        // �ѧ��ѹ����Ѻ�Ѻ���� (��Ѻ��ا����)
+        int MyForm::CountFingers(const cv::Mat& roi) {
+
+            static std::vector<int> fingerHistory;
+            static std::vector<int> xHistory; // �纻���ѵԵ��˹�᡹ X �ͧ�ش�ٹ���ҧ���
+            const int MAX_HISTORY = 17;
+            const int MOTION_HISTORY = 10; // �纻���ѵԡ�â�Ѻ 10 �������ش
+
+        if (roi.empty()) return GESTURE_NONE;
+
+        cv::Mat ycrcb, mask;
+        // 1. �ŧ�� YCrCb �������Ѻ�ʧ��͹��С������¹�������ҧ
+        cv::cvtColor(roi, ycrcb, cv::COLOR_BGR2YCrCb);
+
+        // ��ǧ�ռ���ҵðҹ��к� YCrCb
+        cv::inRange(ycrcb, cv::Scalar(0, 133, 77), cv::Scalar(255, 173, 127), mask);
+
+        // 2. ���������ҧ�����ʹ��� Morphology Close ���Ŵ Noise
+        cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
+        cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, kernel);
+        /*cv::erode(mask, mask, kernel);
+        cv::dilate(mask, mask, kernel);*/
         cv::GaussianBlur(mask, mask, cv::Size(5, 5), 0);
         cv::threshold(mask, mask, 127, 255, cv::THRESH_BINARY);
 
+        // �ʴ��� Mask ���� Debug (����ö�Դ�����ѧ)
+        cv::imshow("Debug: Processed Mask", mask);
+        cv::waitKey(1);
 
-        std::vector<std::vector<cv::Point>> contours; //พิกัดเส้นรอบรูป
-		cv::findContours(mask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);//หาเส้นรอบรูป
+        std::vector<std::vector<cv::Point>> contours;
+        cv::findContours(mask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
-		if (contours.empty()) return 0; //ถ้าไม่พบเส้นรอบรูป
+        if (contours.empty()) return GESTURE_NONE;
 
-		int largestIdx = -1; //เก็บลำดับเส้นรอบรูปที่ใหญ่ที่สุด
-		double maxArea = 0; //เก็บพื้นที่เส้นรอบรูปที่ใหญ่ที่สุด
-        
-        // วาดเส้นรอบรูป 
-        cv::drawContours(roi, contours, largestIdx, cv::Scalar(255, 0, 0), 2);
-
-		for (size_t i = 0; i < contours.size(); i++) { //วนลูปหาเส้นรอบรูปที่ใหญ่ที่สุด
+        int largestIdx = -1;
+        double maxArea = 0;
+        for (size_t i = 0; i < contours.size(); i++) {
             double area = cv::contourArea(contours[i]);
             if (area > maxArea) {
                 maxArea = area;
@@ -66,75 +67,105 @@ namespace Ass {
             }
         }
 
-        if (largestIdx == -1 || maxArea < 3000) return 0; //ไม่พบ เล็กเกิน
+        if (largestIdx == -1 || maxArea < 3000) return GESTURE_NONE;
 
-		std::vector<int> hullIndices; //เก็บจุดยอด convex hull(เส้นคลุมมื่อ)
-		cv::convexHull(contours[largestIdx], hullIndices, false); //หาเส้น convex hull
+        // --- ����: �ӹǳ Centroid ��С������͹����ǹ͹ (����Ѻ��Ǩ⺡���) ---
+        cv::Moments m = cv::moments(contours[largestIdx]);
+        int centerX = (m.m00 != 0) ? (int)(m.m10 / m.m00) : 0;
+        xHistory.push_back(centerX);
+        if (xHistory.size() > MOTION_HISTORY) xHistory.erase(xHistory.begin());
 
+        int movement = 0;
+        if (xHistory.size() >= 2) {
+            int minX = *std::min_element(xHistory.begin(), xHistory.end());
+            int maxX = *std::max_element(xHistory.begin(), xHistory.end());
+            movement = maxX - minX;
+        }
 
-        int validDefects = 0; //จำนวนร่องนิ้ว
+        std::vector<int> hullIndices;
+        cv::convexHull(contours[largestIdx], hullIndices, false);
+
+        int validDefects = 0;
+        double maxDistanceBetweenFingers = 0; // �����������������ҧ
+
         if (hullIndices.size() > 3) {
-			std::vector<cv::Vec4i> defects; //เก็บข้อมูลร่องนิ้ว
+            std::vector<cv::Vec4i> defects;
             try {
-				cv::convexityDefects(contours[largestIdx], hullIndices, defects); //หา ร่องนิ้ว
-				for (const auto& defect : defects) { //วนลูปร่องนิ้ว
-					float depth = defect[3] / 256.0f; //หาความลึกร่องนิ้ว
+                cv::convexityDefects(contours[largestIdx], hullIndices, defects);
+                for (const auto& defect : defects) {
+                    float depth = defect[3] / 256.0f;
+                    cv::Point pStart = contours[largestIdx][defect[0]];
+                    cv::Point pEnd = contours[largestIdx][defect[1]];
+                    cv::Point pFar = contours[largestIdx][defect[2]];
 
-					cv::Point pStart = contours[largestIdx][defect[0]]; //จุดเริ่มต้นร่องนิ้ว
-					cv::Point pEnd = contours[largestIdx][defect[1]]; //จุดสิ้นสุดร่องนิ้ว
-					cv::Point pFar = contours[largestIdx][defect[2]]; //จุดลึกสุดร่องนิ้ว
-
-                    // ก่อนวาด defect ให้แปลง mask เป็น BGR
-                    cv::cvtColor(mask, maskColor, cv::COLOR_GRAY2BGR);
-                    // วาด defect ด้วยสี
-                    cv::line(maskColor, pStart, pFar, cv::Scalar(0, 255, 255), 2); // Yellow
-                    cv::line(maskColor, pEnd, pFar, cv::Scalar(0, 0, 255), 2);     // Red
-                    cv::circle(maskColor, pFar, 6, cv::Scalar(0, 255, 0), -1);     // Green
-
-                    if (depth > 40.0f) { // หาองศาร่องนิ้ว
+                    if (depth > 40.0f) {
                         double a = std::sqrt(std::pow(pEnd.x - pStart.x, 2) + std::pow(pEnd.y - pStart.y, 2));
                         double b = std::sqrt(std::pow(pFar.x - pStart.x, 2) + std::pow(pFar.y - pStart.y, 2));
                         double c = std::sqrt(std::pow(pFar.x - pEnd.x, 2) + std::pow(pFar.y - pEnd.y, 2));
-                        double angle = std::acos((b * b + c * c - a * a) / (2 * b * c)) * 57.2958;
-						
+                        double denom = 2 * b * c;
+                        double angle = 180.0; // default large
+                        if (denom > 1e-6) {
+                            double cosv = (b * b + c * c - a * a) / denom;
+                            if (cosv > 1.0) cosv = 1.0;
+                            if (cosv < -1.0) cosv = -1.0;
+                            angle = std::acos(cosv) * 57.2958;
+                        }
 
-						if (angle < 90) { // ถ้าองศาน้อยกว่า 90 องศานับเป็น 1 ร่องนิ้ว
+                        if (angle < 90) {
                             validDefects++;
+                            if (a > maxDistanceBetweenFingers) maxDistanceBetweenFingers = a;
                         }
                     }
                 }
             }
-            catch (...) { return 0; } // ผิดพลาดคืน 0
+            catch (...) { return GESTURE_NONE; }
         }
 
-		int rawResult = (validDefects == 0) ? 1 : (validDefects + 1); //นิ้ว = ร่องนิ้ว + 1
-		if (rawResult > 5) rawResult = 5; //จำกัดสูงสุด 5 นิ้ว
+        // --- ��á��¡��ҷҧ (�������͹�⺡���) ---
+        int rawResult = GESTURE_NONE;
+        int fingerCount = validDefects + 1;
 
-		fingerHistory.push_back(rawResult); //เก็บประวัติ
-        if (fingerHistory.size() > MAX_HISTORY) {
-            fingerHistory.erase(fingerHistory.begin());
+        if (fingerCount >= 5) {
+            // ��Ҫ� 5 ���� ����ա�â�Ѻ᡹ X �ҡ���� 30 �ԡ�� (��Ѻ����Ţ�����)
+            if (movement > 30) {
+                rawResult = GESTURE_BYE;
+            } else {
+                rawResult = GESTURE_5;
+            }
+        }
+        else if (fingerCount == 3) {
+            // ��� I Love You ���
+            if (maxDistanceBetweenFingers > 100) rawResult = GESTURE_loveu;
+            else rawResult = GESTURE_3;
+        }
+        else {
+            if (fingerCount == 1) rawResult = GESTURE_1;
+            else if (fingerCount == 2) rawResult = GESTURE_2;
+            else if (fingerCount == 4) rawResult = GESTURE_4;
+            else if (fingerCount >= 5) rawResult = GESTURE_5;
         }
 
-		std::map<int, int> counts; //นับความถี่ของนิ้วที่นับได้
-        for (int v : fingerHistory) {
-            counts[v]++;
-        }
+        // --- �к� Filter (����͹���) ---
+        fingerHistory.push_back(rawResult);
+        if (fingerHistory.size() > MAX_HISTORY) fingerHistory.erase(fingerHistory.begin());
 
-		int stableResult = rawResult; //ผลลัพธ์นิ้วที่เสถียร
-		int maxFreq = 0; //ความถี่สูงสุด
-		for (auto it = counts.begin(); it != counts.end(); ++it) { //หา นิ้วที่นับได้บ่อยที่สุด
+        std::map<int, int> counts;
+        for (int v : fingerHistory) counts[v]++;
+
+        int stableResult = rawResult;
+        int maxFreq = 0;
+        for (auto it = counts.begin(); it != counts.end(); ++it) {
             if (it->second > maxFreq) {
                 maxFreq = it->second;
                 stableResult = it->first;
             }
         }
-        cv::imshow("Debug: Processed Mask", maskColor);
-        cv::waitKey(1);
 
-		return stableResult; //จำนวน นิ้วมือที่นับได้
+        return stableResult;
     }
 
-    System::Drawing::Rectangle MyForm::GetImageDisplayRectangle() { // หาขอบPictureBox
+    // --- Helper Functions ---
+    System::Drawing::Rectangle MyForm::GetImageDisplayRectangle() {
         if (this->pictureBox1->Image == nullptr)
             return System::Drawing::Rectangle(0, 0, this->pictureBox1->ClientSize.Width, this->pictureBox1->ClientSize.Height);
         int imgW = this->pictureBox1->Image->Width;
@@ -147,7 +178,7 @@ namespace Ass {
         return System::Drawing::Rectangle((ctlW - dispW) / 2, (ctlH - dispH) / 2, dispW, dispH);
     }
 
-    System::Drawing::Point MyForm::ControlToImagePoint(System::Drawing::Point p) { // พิกัดเมาส์toพิกัดรูป
+    System::Drawing::Point MyForm::ControlToImagePoint(System::Drawing::Point p) {
         if (this->pictureBox1->Image == nullptr) return p;
         System::Drawing::Rectangle r = GetImageDisplayRectangle();
         int x = Math::Max(r.X, Math::Min(p.X, r.X + r.Width - 1));
@@ -157,42 +188,40 @@ namespace Ass {
         return System::Drawing::Point(ix, iy);
     }
 
+    // --- ��ǹ��ѡ: startbutton_Click ---
     System::Void MyForm::startbutton_Click(System::Object^ sender, System::EventArgs^ e) {
-        if (isRunning) { isRunning = false; return; } // หากกล้องทำงานอยู่
+        if (isRunning) { isRunning = false; return; }
 
         try {
-            VideoCapture capture(1); //เปิดกล้อง
+            VideoCapture capture(0);
             if (!capture.isOpened()) {
-                MessageBox::Show("Image Error");
+                MessageBox::Show("�������ö�Դ���ͧ��", "Error");
                 return;
             }
 
-            int w = (int)capture.get(CAP_PROP_FRAME_WIDTH); //กว้าง 
-            int h = (int)capture.get(CAP_PROP_FRAME_HEIGHT);//สูง
-            
-            // สร้าง Bitmap ภาพ
+            int w = (int)capture.get(CAP_PROP_FRAME_WIDTH);
+            int h = (int)capture.get(CAP_PROP_FRAME_HEIGHT);
             System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap(w, h, System::Drawing::Imaging::PixelFormat::Format24bppRgb);
-            System::Drawing::Rectangle rect(0, 0, w, h); //ขอบภาพ
+            System::Drawing::Rectangle rect(0, 0, w, h);
 
-            isRunning = true; //ภ้ากล้องเปิด เปลียนปุ่ม
+            isRunning = true;
             this->startbutton->Text = L"Stop";
             this->stopbutton->Enabled = true;
             this->roiButton->Enabled = false;
 
             while (isRunning) {
-                // สร้างหน่วยความจำ สร้างรูปชนิด Bat ใช้กับ OpenCV
                 auto bmpData = bmp->LockBits(rect, System::Drawing::Imaging::ImageLockMode::WriteOnly, bmp->PixelFormat);
                 Mat frame(h, w, CV_8UC3, bmpData->Scan0.ToPointer(), bmpData->Stride);
 
-                if (!capture.read(frame)) { // ถ้าอ่านภาพไม่ได้ สั่งหยุด
+                if (!capture.read(frame)) {
                     isRunning = false;
                     bmp->UnlockBits(bmpData);
                     break;
                 }
 
-                flip(frame, frame, 1); //พลิกภาพ
+                flip(frame, frame, 1);
 
-                if (hasROI) { //มีพื้นที่ ROI
+                if (hasROI) {
                     int x1 = Math::Max(0, Math::Min(roiStartPoint.X, roiEndPoint.X));
                     int y1 = Math::Max(0, Math::Min(roiStartPoint.Y, roiEndPoint.Y));
                     int x2 = Math::Min(frame.cols - 1, Math::Max(roiStartPoint.X, roiEndPoint.X));
@@ -206,29 +235,34 @@ namespace Ass {
                         Mat roiRect = frame(cv::Rect(x1, y1, x2 - x1, y2 - y1));
                         cv::Mat roiProcess = roiRect.clone();
 
+                        // ���¡�ѧ��ѹ�Ѻ���Ƿ���ҹ Filter ����
                         int result = CountFingers(roiProcess);
-                        
-                        std::string signMsg = TranslateSign(result);
 
+                        // 2. �ŧ��ҵ���Ţ�繢�ͤ������� switch-case
+                        std::string label = "";
+                        switch (result) {
+                        case GESTURE_1:    label = "1: Number 1"; break;
+                        case GESTURE_2:    label = "2: Number 2"; break;
+                        case GESTURE_3:    label = "3: Number 3"; break;
+                        case GESTURE_4:    label = "4: Number 4"; break;
+                        case GESTURE_5:    label = "5: Number 5"; break;
+                        case GESTURE_loveu: label = "Love U"; break; // ����������������
+                        case GESTURE_BYE:  label = "BYE BYE: Waving Hand"; break;
+                        case GESTURE_NONE: label = "Searching..."; break;
+                        default:           label = "Unknown"; break;
+                        }
 
                         rectangle(frame, cv::Point(x1, y1), cv::Point(x2, y2), Scalar(0, 255, 0), 3);
-                        cv::putText(frame, "Fingers: " + std::to_string(result),
-                            cv::Point(x1, y1 - 10), cv::FONT_HERSHEY_SIMPLEX, 1.0, Scalar(0, 255, 0), 2);
-
-                        cv::putText(frame, "Sign: " + signMsg,
-                            cv::Point(x1, y1 - 50), cv::FONT_HERSHEY_DUPLEX, 1.2, Scalar(0, 255, 255), 2);
+                        cv::putText(frame, label,
+                            cv::Point(x1, y1 - 10), cv::FONT_HERSHEY_SIMPLEX, 0.8, Scalar(0, 255, 0), 2);
                     }
                 }
 
                 bmp->UnlockBits(bmpData);
-
-                // แสดงผลภาพ
                 this->pictureBox1->Image = bmp;
-
                 Application::DoEvents();
             }
 
-            // ปิดหน้าต่างและ reset button
             capture.release();
             cv::destroyAllWindows();
             this->startbutton->Text = L"Start";
@@ -238,9 +272,7 @@ namespace Ass {
         catch (std::exception& ex) { MessageBox::Show(gcnew System::String(ex.what()), "Error"); isRunning = false; }
     }
 
-    System::Void MyForm::stopbutton_Click(System::Object^ sender, System::EventArgs^ e) { 
-        isRunning = false; 
-    }
+    System::Void MyForm::stopbutton_Click(System::Object^ sender, System::EventArgs^ e) { isRunning = false; }
 
     System::Void MyForm::roiButton_Click(System::Object^ sender, System::EventArgs^ e) {
         if (hasROI) {
@@ -249,7 +281,7 @@ namespace Ass {
             this->Text = L"Camera Application";
         }
         else {
-            if (isRunning) { MessageBox::Show("¡ÃØ³Ò Stop ¡ÅéÍ§¡èÍ¹ÇÒ´ ROI", "¤Óá¹Ð¹Ó"); return; }
+            if (isRunning) { MessageBox::Show("��س� Stop ���ͧ��͹�Ҵ ROI", "���й�"); return; }
             this->roiButton->Text = L"Drawing...";
             this->Text = L"Click and drag to draw ROI";
         }
@@ -303,4 +335,4 @@ namespace Ass {
     }
 
     System::Void MyForm::MyForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) { isRunning = false; }
-} // namespace Ass 
+} // namespace Ass
