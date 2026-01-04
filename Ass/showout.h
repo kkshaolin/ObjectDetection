@@ -18,9 +18,19 @@ namespace Ass {
 		showout(void)
 		{
 			InitializeComponent();
-			//
 			//TODO: Add the constructor code here
-			//
+		}
+
+		// Constructor ???? ??? path ?????????
+		showout(String^ imagePath)
+		{
+			InitializeComponent();
+			try {
+				pictureBox1->Image = Image::FromFile(imagePath);
+				pictureBox1->SizeMode = PictureBoxSizeMode::Zoom;
+			} catch (Exception^ ex) {
+				MessageBox::Show("??????????????????????: " + ex->Message);
+			}
 		}
 
 	protected:
@@ -64,11 +74,13 @@ namespace Ass {
 			// toolStripContainer1.ContentPanel
 			// 
 			this->toolStripContainer1->ContentPanel->Controls->Add(this->pictureBox1);
-			this->toolStripContainer1->ContentPanel->Size = System::Drawing::Size(484, 325);
+			this->toolStripContainer1->ContentPanel->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->toolStripContainer1->ContentPanel->Size = System::Drawing::Size(363, 244);
 			this->toolStripContainer1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->toolStripContainer1->Location = System::Drawing::Point(0, 0);
+			this->toolStripContainer1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->toolStripContainer1->Name = L"toolStripContainer1";
-			this->toolStripContainer1->Size = System::Drawing::Size(484, 325);
+			this->toolStripContainer1->Size = System::Drawing::Size(363, 264);
 			this->toolStripContainer1->TabIndex = 0;
 			this->toolStripContainer1->Text = L"toolStripContainer1";
 			// 
@@ -76,19 +88,22 @@ namespace Ass {
 			// 
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(484, 325);
+			this->pictureBox1->Size = System::Drawing::Size(363, 244);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			// 
 			// showout
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(484, 325);
+			this->ClientSize = System::Drawing::Size(363, 264);
 			this->Controls->Add(this->toolStripContainer1);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"showout";
 			this->Text = L"showout";
+			this->Load += gcnew System::EventHandler(this, &showout::showout_Load);
 			this->toolStripContainer1->ContentPanel->ResumeLayout(false);
 			this->toolStripContainer1->ResumeLayout(false);
 			this->toolStripContainer1->PerformLayout();
@@ -97,5 +112,7 @@ namespace Ass {
 
 		}
 #pragma endregion
+	private: System::Void showout_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
 	};
 }

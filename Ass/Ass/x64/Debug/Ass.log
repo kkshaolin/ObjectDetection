@@ -1,19 +1,23 @@
-﻿  Main.cpp
-  MyForm.cpp
-  MyForm1.cpp
-  MyForm2.cpp
-  Generating Code...
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 'cv::cuda::GpuMat::GpuMat': function compiled as native:
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 	Found an intrinsic not supported in managed code
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 'cv::cuda::HostMem::HostMem': function compiled as native:
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 	Found an intrinsic not supported in managed code
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 'cv::cuda::GpuMat::GpuMat': function compiled as native:
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 	Found an intrinsic not supported in managed code
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 'cv::cuda::HostMem::HostMem': function compiled as native:
-C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 	Found an intrinsic not supported in managed code
+﻿  MyForm.cpp
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E44' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E21' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E48' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E2A' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E32' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E23' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E16' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E40' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E1B' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E34' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E14' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E01' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E25' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E49' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E2D' cannot be represented in the current code page (1252)
+D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E07' cannot be represented in the current code page (1252)
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 'cv::cuda::GpuMat::GpuMat': function compiled as native:
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 	Found an intrinsic not supported in managed code
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 'cv::cuda::HostMem::HostMem': function compiled as native:
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 	Found an intrinsic not supported in managed code
   Main.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  Ass.vcxproj -> C:\Users\Win11\source\repos\ObjectDetection\Ass\x64\Debug\Ass.exe
+  Ass.vcxproj -> D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\x64\Debug\Ass.exe

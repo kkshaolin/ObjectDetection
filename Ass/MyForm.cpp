@@ -1,19 +1,13 @@
 ﻿#include "MyForm.h"
-
+#include "showout.h"
 #include <opencv2/opencv.hpp>
-
 #include <string>
-
 #include <vector>
-
 #include <map>
-
 #include <algorithm>
-
 #include <cmath>
 
 using namespace cv;
-
 using namespace System::Drawing;
 
 namespace Ass {
@@ -37,16 +31,6 @@ namespace Ass {
         GESTURE_BYE = 7 // à¾ÔèÁ·èÒâº¡Á×Í
 
     };
-
-
-
-
-
-
-
-
-
-
 
     // ¿Ñ§¡ìªÑ¹ÊÓËÃÑº¹Ñº¹ÔéÇ (»ÃÑº»ÃØ§ãËÁè)
 
@@ -382,167 +366,152 @@ namespace Ass {
     // --- ÊèÇ¹ËÅÑ¡: startbutton_Click ---
 
     System::Void MyForm::startbutton_Click(System::Object^ sender, System::EventArgs^ e) {
-
         if (isRunning) { isRunning = false; return; }
-
-
-
+        //MessageBox::Show("Path ปัจจุบันคือ:\n" + System::IO::Directory::GetCurrentDirectory());
         try {
-
             VideoCapture capture(0);
-
             if (!capture.isOpened()) {
-
-                MessageBox::Show("äÁèÊÒÁÒÃ¶à»Ô´¡ÅéÍ§ä´é", "Error");
-
+                MessageBox::Show("ไม่สามารถเปิดกล้องได้", "Error");
                 return;
-
             }
 
-
-
             int w = (int)capture.get(CAP_PROP_FRAME_WIDTH);
-
             int h = (int)capture.get(CAP_PROP_FRAME_HEIGHT);
-
             System::Drawing::Bitmap^ bmp = gcnew System::Drawing::Bitmap(w, h, System::Drawing::Imaging::PixelFormat::Format24bppRgb);
-
             System::Drawing::Rectangle rect(0, 0, w, h);
 
-
-
             isRunning = true;
-
             this->startbutton->Text = L"Stop";
-
             this->stopbutton->Enabled = true;
-
             this->roiButton->Enabled = false;
 
-
+            // --- ส่วนที่เพิ่ม 1: ตัวแปรสำหรับจัดการหน้าต่าง Showout ---
+            Ass::showout^ stickerForm = nullptr; // เก็บหน้าต่างสติ๊กเกอร์
+            int lastGesture = -1;                // เก็บค่าท่าทางก่อนหน้า
+            // -----------------------------------------------------
 
             while (isRunning) {
-
                 auto bmpData = bmp->LockBits(rect, System::Drawing::Imaging::ImageLockMode::WriteOnly, bmp->PixelFormat);
-
                 Mat frame(h, w, CV_8UC3, bmpData->Scan0.ToPointer(), bmpData->Stride);
 
-
-
                 if (!capture.read(frame)) {
-
                     isRunning = false;
-
                     bmp->UnlockBits(bmpData);
-
                     break;
-
                 }
-
-
 
                 flip(frame, frame, 1);
 
-
-
                 if (hasROI) {
-
                     int x1 = Math::Max(0, Math::Min(roiStartPoint.X, roiEndPoint.X));
-
                     int y1 = Math::Max(0, Math::Min(roiStartPoint.Y, roiEndPoint.Y));
-
                     int x2 = Math::Min(frame.cols - 1, Math::Max(roiStartPoint.X, roiEndPoint.X));
-
                     int y2 = Math::Min(frame.rows - 1, Math::Max(roiStartPoint.Y, roiEndPoint.Y));
 
-
-
                     if (x2 > x1 && y2 > y1) {
-
                         Mat overlay = frame.clone();
-
                         overlay.setTo(Scalar(0, 0, 0));
-
                         addWeighted(frame, 0.5, overlay, 0.5, 0, frame);
 
-
-
                         Mat roiRect = frame(cv::Rect(x1, y1, x2 - x1, y2 - y1));
-
                         cv::Mat roiProcess = roiRect.clone();
-
-
-
-                        // àÃÕÂ¡¿Ñ§¡ìªÑ¹¹Ñº¹ÔéÇ·Õè¼èÒ¹ Filter áÅéÇ
 
                         int result = CountFingers(roiProcess);
 
-
-
-                        // 2. á»Å§¤èÒµÑÇàÅ¢à»ç¹¢éÍ¤ÇÒÁ´éÇÂ switch-case
-
                         std::string label = "";
+                        System::String^ stickerUrl = ""; // ตัวแปรเก็บ URL รูป
 
+                        // --- ส่วนที่แก้ไข 2: ใน Switch แค่กำหนดค่า String ห้าม ShowDialog ---
                         switch (result) {
-
-                        case GESTURE_1:    label = "1: Number 1"; break;
-
-                        case GESTURE_2:    label = "2: Number 2"; break;
-
-                        case GESTURE_3:    label = "3: Number 3"; break;
-
-                        case GESTURE_4:    label = "4: Number 4"; break;
-
-                        case GESTURE_5:    label = "5: Number 5"; break;
-
-                        case GESTURE_loveu: label = "Love U"; break; // ·èÒãËÁè·ÕèàÃÒà¾ÔèÁ
-
-                        case GESTURE_BYE:  label = "BYE BYE: Waving Hand"; break;
-
-                        case GESTURE_NONE: label = "Searching..."; break;
-
-                        default:           label = "Unknown"; break;
-
+                        case GESTURE_1:
+                            label = "1: Number 1";
+                            stickerUrl = ".\\image\\1.png";
+                            break;
+                        case GESTURE_2:
+                            label = "2: Number 2";
+                            stickerUrl = ".\\image\\2.png";
+                            break;
+                        case GESTURE_3:
+                            label = "3: Number 3";
+                            stickerUrl = ".\\image\\3.png";
+                            break;
+                        case GESTURE_4:
+                            label = "4: Number 4";
+                            stickerUrl = ".\\image\\4.jpg";
+                            break;
+                        case GESTURE_5:
+                            label = "5: Number 5";
+                            stickerUrl = ".\\image\\5.jpg";
+                            break;
+                        case GESTURE_loveu:
+                            label = "Love U";
+                            stickerUrl = ".\\image\\love.jpg";
+                            break;
+                        case GESTURE_BYE:
+                            label = "BYE BYE: Waving Hand";
+                            stickerUrl = ".\\image\\bye.jpg";
+                            break;
+                        case GESTURE_NONE:
+                            label = "Searching...";
+                            stickerUrl = ""; // ไม่แสดงรูป
+                            break;
+                        default:
+                            label = "Unknown";
+                            stickerUrl = "";
+                            break;
                         }
 
+                        // --- ส่วนที่เพิ่ม 3: Logic ควบคุมหน้าต่าง Showout แบบ Realtime ---
 
+                        // ตรวจสอบว่าท่าทางเปลี่ยนไปจากรอบที่แล้วหรือไม่
+                        if (result != lastGesture) {
+
+                            // ถ้ามีหน้าต่างเก่าเปิดอยู่ ให้ปิดไปก่อน
+                            if (stickerForm != nullptr && !stickerForm->IsDisposed) {
+                                stickerForm->Close();
+                                stickerForm = nullptr;
+                            }
+
+                            // ถ้าท่าทางใหม่ไม่ใช่ NONE และมี URL ให้สร้างหน้าต่างใหม่
+                            if (result != GESTURE_NONE && stickerUrl != "") {
+                                stickerForm = gcnew Ass::showout(stickerUrl);
+
+                                // ตั้งค่าให้หน้าต่างอยู่บนสุดเสมอ (Optional)
+                                stickerForm->TopMost = true;
+
+                                // ใช้ Show() แทน ShowDialog() เพื่อไม่ให้โปรแกรมค้าง
+                                stickerForm->Show();
+                            }
+
+                            lastGesture = result; // จำท่าทางปัจจุบันไว้เทียบรอบหน้า
+                        }
+                        // -----------------------------------------------------------
 
                         rectangle(frame, cv::Point(x1, y1), cv::Point(x2, y2), Scalar(0, 255, 0), 3);
-
                         cv::putText(frame, label,
-
                             cv::Point(x1, y1 - 10), cv::FONT_HERSHEY_SIMPLEX, 0.8, Scalar(0, 255, 0), 2);
-
                     }
-
                 }
 
-
-
                 bmp->UnlockBits(bmpData);
-
                 this->pictureBox1->Image = bmp;
-
-                Application::DoEvents();
-
+                Application::DoEvents(); // สำคัญมาก: ทำให้ UI ตอบสนองและวาดหน้าต่าง
             }
 
-
+            // --- ส่วนที่เพิ่ม 4: Clean up เมื่อกด Stop หรือจบลูป ---
+            if (stickerForm != nullptr && !stickerForm->IsDisposed) {
+                stickerForm->Close();
+                stickerForm = nullptr;
+            }
+            // ------------------------------------------------
 
             capture.release();
-
             cv::destroyAllWindows();
-
             this->startbutton->Text = L"Start";
-
             this->stopbutton->Enabled = false;
-
             this->roiButton->Enabled = true;
-
         }
-
         catch (std::exception& ex) { MessageBox::Show(gcnew System::String(ex.what()), "Error"); isRunning = false; }
-
     }
 
 
@@ -673,4 +642,6 @@ namespace Ass {
 
     System::Void MyForm::MyForm_FormClosing(System::Object^ sender, System::Windows::Forms::FormClosingEventArgs^ e) { isRunning = false; }
 
+ 
+    
 } // namespace Ass
