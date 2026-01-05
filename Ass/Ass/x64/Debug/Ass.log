@@ -1,4 +1,5 @@
-﻿  MyForm.cpp
+﻿  Main.cpp
+  MyForm.cpp
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E44' cannot be represented in the current code page (1252)
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E21' cannot be represented in the current code page (1252)
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E48' cannot be represented in the current code page (1252)
@@ -15,6 +16,17 @@ D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warn
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E49' cannot be represented in the current code page (1252)
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E2D' cannot be represented in the current code page (1252)
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\MyForm.cpp(374,34): warning C4566: character represented by universal-character-name '\u0E07' cannot be represented in the current code page (1252)
+  MyForm1.cpp
+  showout.cpp
+  Generating Code...
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 'cv::cuda::GpuMat::GpuMat': function compiled as native:
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 	Found an intrinsic not supported in managed code
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 'cv::cuda::HostMem::HostMem': function compiled as native:
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 	Found an intrinsic not supported in managed code
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 'cv::cuda::GpuMat::GpuMat': function compiled as native:
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 	Found an intrinsic not supported in managed code
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 'cv::cuda::HostMem::HostMem': function compiled as native:
+C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 	Found an intrinsic not supported in managed code
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 'cv::cuda::GpuMat::GpuMat': function compiled as native:
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(113,1): warning C4793: 	Found an intrinsic not supported in managed code
 C:\opencv\build\include\opencv2\core\cuda.inl.hpp(511,1): warning C4793: 'cv::cuda::HostMem::HostMem': function compiled as native:

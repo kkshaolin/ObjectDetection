@@ -114,16 +114,17 @@ namespace Ass {
 			this->panelCard->Controls->Add(this->labelDescription);
 			this->panelCard->Controls->Add(this->btnStart);
 			this->panelCard->Controls->Add(this->btnExit);
-			this->panelCard->Location = System::Drawing::Point(50, 40);
+			this->panelCard->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->panelCard->Location = System::Drawing::Point(0, 0);
 			this->panelCard->Name = L"panelCard";
-			this->panelCard->Size = System::Drawing::Size(484, 480);
+			this->panelCard->Size = System::Drawing::Size(704, 441);
 			this->panelCard->TabIndex = 0;
 			// 
 			// MyForm1
 			// 
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(236)), static_cast<System::Int32>(static_cast<System::Byte>(240)),
 				static_cast<System::Int32>(static_cast<System::Byte>(241)));
-			this->ClientSize = System::Drawing::Size(584, 561);
+			this->ClientSize = System::Drawing::Size(704, 441);
 			this->Controls->Add(this->panelCard);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->MaximizeBox = false;
