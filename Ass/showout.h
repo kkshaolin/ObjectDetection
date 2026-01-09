@@ -74,13 +74,13 @@ namespace Ass {
 			// toolStripContainer1.ContentPanel
 			// 
 			this->toolStripContainer1->ContentPanel->Controls->Add(this->pictureBox1);
-			this->toolStripContainer1->ContentPanel->Margin = System::Windows::Forms::Padding(2);
-			this->toolStripContainer1->ContentPanel->Size = System::Drawing::Size(465, 417);
+			this->toolStripContainer1->ContentPanel->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
+			this->toolStripContainer1->ContentPanel->Size = System::Drawing::Size(620, 513);
 			this->toolStripContainer1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->toolStripContainer1->Location = System::Drawing::Point(0, 0);
-			this->toolStripContainer1->Margin = System::Windows::Forms::Padding(2);
+			this->toolStripContainer1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->toolStripContainer1->Name = L"toolStripContainer1";
-			this->toolStripContainer1->Size = System::Drawing::Size(465, 442);
+			this->toolStripContainer1->Size = System::Drawing::Size(620, 544);
 			this->toolStripContainer1->TabIndex = 0;
 			this->toolStripContainer1->Text = L"toolStripContainer1";
 			// 
@@ -88,19 +88,20 @@ namespace Ass {
 			// 
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(465, 417);
+			this->pictureBox1->Size = System::Drawing::Size(620, 513);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
+			this->pictureBox1->Click += gcnew System::EventHandler(this, &showout::pictureBox1_Click);
 			// 
 			// showout
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(465, 442);
+			this->ClientSize = System::Drawing::Size(620, 544);
 			this->Controls->Add(this->toolStripContainer1);
-			this->Margin = System::Windows::Forms::Padding(2);
+			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"showout";
 			this->Text = L"showout";
 			this->Load += gcnew System::EventHandler(this, &showout::showout_Load);
@@ -114,5 +115,7 @@ namespace Ass {
 #pragma endregion
 	private: System::Void showout_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+	private: System::Void pictureBox1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

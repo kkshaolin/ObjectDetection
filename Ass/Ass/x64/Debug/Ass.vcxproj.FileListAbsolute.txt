@@ -8,3 +8,8 @@ C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.Genera
 C:\Users\Win11\source\repos\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm1.resources
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm1.resources
 D:\Users\kitti\Desktop\selfcode\sp2\ObjectDetection\Ass\Ass\x64\Debug\Ass.showout.resources
+C:\Users\Lenovo LOQ\source\repos\kkshaolin\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.AssemblyReference.cache
+C:\Users\Lenovo LOQ\source\repos\kkshaolin\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm.resources
+C:\Users\Lenovo LOQ\source\repos\kkshaolin\ObjectDetection\Ass\Ass\x64\Debug\Ass.MyForm1.resources
+C:\Users\Lenovo LOQ\source\repos\kkshaolin\ObjectDetection\Ass\Ass\x64\Debug\Ass.showout.resources
+C:\Users\Lenovo LOQ\source\repos\kkshaolin\ObjectDetection\Ass\Ass\x64\Debug\Ass.vcxproj.GenerateResource.cache

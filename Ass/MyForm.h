@@ -142,7 +142,7 @@ namespace Ass {
 			// 
 			this->splitContainer1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->splitContainer1->Location = System::Drawing::Point(0, 0);
-			this->splitContainer1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->splitContainer1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->splitContainer1->Name = L"splitContainer1";
 			// 
 			// splitContainer1.Panel1
@@ -154,46 +154,54 @@ namespace Ass {
 			// splitContainer1.Panel2
 			// 
 			this->splitContainer1->Panel2->Controls->Add(this->pictureBox1);
-			this->splitContainer1->Size = System::Drawing::Size(704, 442);
-			this->splitContainer1->SplitterDistance = 140;
-			this->splitContainer1->SplitterWidth = 3;
+			this->splitContainer1->Size = System::Drawing::Size(939, 544);
+			this->splitContainer1->SplitterDistance = 185;
 			this->splitContainer1->TabIndex = 0;
 			// 
 			// roiButton
 			// 
-			this->roiButton->Location = System::Drawing::Point(26, 355);
-			this->roiButton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->roiButton->BackColor = System::Drawing::Color::Gold;
+			this->roiButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->roiButton->ForeColor = System::Drawing::SystemColors::ActiveCaptionText;
+			this->roiButton->Location = System::Drawing::Point(44, 200);
+			this->roiButton->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->roiButton->Name = L"roiButton";
-			this->roiButton->Size = System::Drawing::Size(100, 37);
+			this->roiButton->Size = System::Drawing::Size(108, 60);
 			this->roiButton->TabIndex = 2;
 			this->roiButton->Text = L"Set ROI";
-			this->roiButton->UseVisualStyleBackColor = true;
+			this->roiButton->UseVisualStyleBackColor = false;
 			this->roiButton->Click += gcnew System::EventHandler(this, &MyForm::roiButton_Click);
 			// 
 			// stopbutton
 			// 
+			this->stopbutton->BackColor = System::Drawing::Color::Brown;
 			this->stopbutton->Enabled = false;
-			this->stopbutton->Location = System::Drawing::Point(26, 396);
-			this->stopbutton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->stopbutton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10.2F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->stopbutton->ForeColor = System::Drawing::SystemColors::ButtonFace;
+			this->stopbutton->Location = System::Drawing::Point(32, 295);
+			this->stopbutton->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->stopbutton->Name = L"stopbutton";
-			this->stopbutton->Size = System::Drawing::Size(100, 35);
+			this->stopbutton->Size = System::Drawing::Size(133, 80);
 			this->stopbutton->TabIndex = 1;
 			this->stopbutton->Text = L"Stop";
-			this->stopbutton->UseVisualStyleBackColor = true;
+			this->stopbutton->UseVisualStyleBackColor = false;
 			this->stopbutton->Click += gcnew System::EventHandler(this, &MyForm::stopbutton_Click);
 			// 
 			// startbutton
 			// 
-			this->startbutton->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->startbutton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			this->startbutton->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->startbutton->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Zoom;
 			this->startbutton->ForeColor = System::Drawing::SystemColors::ActiveCaption;
 			this->startbutton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"startbutton.Image")));
-			this->startbutton->Location = System::Drawing::Point(26, 11);
-			this->startbutton->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->startbutton->Location = System::Drawing::Point(44, 68);
+			this->startbutton->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->startbutton->Name = L"startbutton";
-			this->startbutton->Size = System::Drawing::Size(100, 230);
+			this->startbutton->Size = System::Drawing::Size(108, 83);
 			this->startbutton->TabIndex = 0;
-			this->startbutton->Text = L"Start";
-			this->startbutton->UseVisualStyleBackColor = true;
+			this->startbutton->UseVisualStyleBackColor = false;
 			this->startbutton->Click += gcnew System::EventHandler(this, &MyForm::startbutton_Click);
 			// 
 			// pictureBox1
@@ -201,9 +209,9 @@ namespace Ass {
 			this->pictureBox1->BackColor = System::Drawing::Color::Black;
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
-			this->pictureBox1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(561, 442);
+			this->pictureBox1->Size = System::Drawing::Size(750, 544);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
@@ -213,11 +221,11 @@ namespace Ass {
 			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(704, 442);
+			this->ClientSize = System::Drawing::Size(939, 544);
 			this->Controls->Add(this->splitContainer1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->Name = L"MyForm";
 			this->Text = L"Camera Application";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &MyForm::MyForm_FormClosing);

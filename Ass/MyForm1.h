@@ -46,11 +46,11 @@ namespace Ass {
 			this->labelTitle->Font = (gcnew System::Drawing::Font(L"Leelawadee UI", 28, System::Drawing::FontStyle::Bold));
 			this->labelTitle->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(44)), static_cast<System::Int32>(static_cast<System::Byte>(62)),
 				static_cast<System::Int32>(static_cast<System::Byte>(80)));
-			this->labelTitle->Location = System::Drawing::Point(0, 60);
+			this->labelTitle->Location = System::Drawing::Point(7, 41);
 			this->labelTitle->Name = L"labelTitle";
-			this->labelTitle->Size = System::Drawing::Size(484, 60);
+			this->labelTitle->Size = System::Drawing::Size(697, 63);
 			this->labelTitle->TabIndex = 0;
-			this->labelTitle->Text = L"แปลภาษามือ";
+			this->labelTitle->Text = L"โปรแกรมแปลภาษามืออย่างง่าย";
 			this->labelTitle->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
 			// labelDescription
@@ -58,13 +58,15 @@ namespace Ass {
 			this->labelDescription->Font = (gcnew System::Drawing::Font(L"Leelawadee UI", 11));
 			this->labelDescription->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(127)),
 				static_cast<System::Int32>(static_cast<System::Byte>(140)), static_cast<System::Int32>(static_cast<System::Byte>(141)));
-			this->labelDescription->Location = System::Drawing::Point(40, 140);
+			this->labelDescription->Location = System::Drawing::Point(117, 124);
 			this->labelDescription->Name = L"labelDescription";
-			this->labelDescription->Size = System::Drawing::Size(404, 100);
+			this->labelDescription->Size = System::Drawing::Size(508, 150);
 			this->labelDescription->TabIndex = 1;
-			this->labelDescription->Text = L"สัมผัสประสบการณ์การสื่อสารรูปแบบใหม่\nใช้ AI ตรวจจับท่าทางของคุณผ่านกล้องแบบ Real-"
-				L"time\nแม่นยำ ใช้งานง่าย และรวดเร็ว";
+			this->labelDescription->Text = L"ขั้นตอนการใช้งาน \r\n1. กดSTART เพื่อเริ่มต้นโปรแกรม\r\n2.กดปุ่ม Camera เพื่อเปิดใช้ง"
+				L"านกล้องของอุปกรณ์\r\n3.กดปุ่มSTOP เพื่อหยุดการทำงานจากนั้นกดปุ่ม set ROI เพื่อลากก"
+				L"รอบพื้นที่ ที่ต้องการตรวจจับภาษามือ\r\n\r\n";
 			this->labelDescription->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->labelDescription->Click += gcnew System::EventHandler(this, &MyForm1::labelDescription_Click);
 			// 
 			// btnStart
 			// 
@@ -77,7 +79,7 @@ namespace Ass {
 			this->btnStart->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			this->btnStart->Font = (gcnew System::Drawing::Font(L"Leelawadee UI", 14, System::Drawing::FontStyle::Bold));
 			this->btnStart->ForeColor = System::Drawing::Color::White;
-			this->btnStart->Location = System::Drawing::Point(117, 280);
+			this->btnStart->Location = System::Drawing::Point(230, 277);
 			this->btnStart->Name = L"btnStart";
 			this->btnStart->Size = System::Drawing::Size(250, 60);
 			this->btnStart->TabIndex = 2;
@@ -97,7 +99,7 @@ namespace Ass {
 			this->btnExit->Font = (gcnew System::Drawing::Font(L"Leelawadee UI", 12));
 			this->btnExit->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(231)), static_cast<System::Int32>(static_cast<System::Byte>(76)),
 				static_cast<System::Int32>(static_cast<System::Byte>(60)));
-			this->btnExit->Location = System::Drawing::Point(117, 360);
+			this->btnExit->Location = System::Drawing::Point(230, 361);
 			this->btnExit->Name = L"btnExit";
 			this->btnExit->Size = System::Drawing::Size(250, 50);
 			this->btnExit->TabIndex = 3;
@@ -155,5 +157,7 @@ namespace Ass {
 		System::Void btnExit_Click(System::Object^ sender, System::EventArgs^ e) {
 			Application::Exit();
 		}
-	};
+	private: System::Void labelDescription_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

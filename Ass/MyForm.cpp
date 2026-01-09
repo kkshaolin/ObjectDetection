@@ -28,11 +28,11 @@ namespace Ass {
 
         GESTURE_loveu = 6,
 
-        GESTURE_BYE = 7 // à¾ÔèÁ·èÒâº¡Á×Í
+        GESTURE_BYE = 7 
 
     };
 
-    // ¿Ñ§¡ìªÑ¹ÊÓËÃÑº¹Ñº¹ÔéÇ (»ÃÑº»ÃØ§ãËÁè)
+    
 
     int MyForm::CountFingers(const cv::Mat& roi) {
 
@@ -54,27 +54,25 @@ namespace Ass {
 
         cv::Mat ycrcb, mask;
 
-        // 1. á»Å§à»ç¹ YCrCb à¾×èÍÊÙé¡ÑºáÊ§ÂéÍ¹áÅÐ¡ÒÃà»ÅÕèÂ¹¤ÇÒÁÊÇèÒ§
+        
 
         cv::cvtColor(roi, ycrcb, cv::COLOR_BGR2YCrCb);
 
 
 
-        // ªèÇ§ÊÕ¼ÔÇÁÒµÃ°Ò¹ã¹ÃÐºº YCrCb
+        
 
         cv::inRange(ycrcb, cv::Scalar(0, 133, 77), cv::Scalar(255, 173, 127), mask);
 
 
 
-        // 2. ¶ÁÃÙâËÇè¡ÅÒ§½èÒÁ×Í´éÇÂ Morphology Close áÅÐÅ´ Noise
+        
 
         cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
 
         cv::morphologyEx(mask, mask, cv::MORPH_CLOSE, kernel);
 
-        /*cv::erode(mask, mask, kernel);
-
-        cv::dilate(mask, mask, kernel);*/
+        
 
         cv::GaussianBlur(mask, mask, cv::Size(5, 5), 0);
 
@@ -82,7 +80,7 @@ namespace Ass {
 
 
 
-        // áÊ´§¼Å Mask à¾×èÍ Debug (ÊÒÁÒÃ¶»Ô´ä´é·ÕËÅÑ§)
+        
 
         cv::imshow("Debug: Processed Mask", mask);
 
@@ -228,7 +226,7 @@ namespace Ass {
 
 
 
-        // --- µÃÃ¡ÐáÂ¡·èÒ·Ò§ (à¾ÔèÁà§×èÍ¹ä¢âº¡Á×Í) ---
+        
 
         int rawResult = GESTURE_NONE;
 
@@ -238,7 +236,7 @@ namespace Ass {
 
         if (fingerCount >= 5) {
 
-            // ¶éÒªÙ 5 ¹ÔéÇ áÅÐÁÕ¡ÒÃ¢ÂÑºá¡¹ X ÁÒ¡¡ÇèÒ 30 ¾Ô¡à«Å (»ÃÑºµÑÇàÅ¢¹Õéä´é)
+            
 
             if (movement > 30) {
 
@@ -255,7 +253,7 @@ namespace Ass {
 
         else if (fingerCount == 3) {
 
-            // ·èÒ I Love You à´ÔÁ
+            
 
             if (maxDistanceBetweenFingers > 100) rawResult = GESTURE_loveu;
 
@@ -277,7 +275,7 @@ namespace Ass {
 
 
 
-        // --- ÃÐºº Filter (àËÁ×Í¹à´ÔÁ) ---
+        
 
         fingerHistory.push_back(rawResult);
 
